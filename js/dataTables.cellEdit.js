@@ -139,11 +139,15 @@ function getInputHtml(currentColumnIndex, settings, oldValue) {
 			if (setting.column == currentColumnIndex) {
 				inputSetting = setting;
 				inputType = inputSetting.type.toLowerCase();
+        overrideCss = inputSetting.overrideCss;
 			}
 		});
 	}
 
     if (settings.inputCss) { inputCss = settings.inputCss; }
+    // but override if the user wants that for this input
+    if (overrideCss) { inputCss = overrideCss; }
+
     if (settings.wrapperHtml) {
         var elements = settings.wrapperHtml.split('{content}');
         if (elements.length === 2) {
@@ -209,6 +213,10 @@ function getInputHtml(currentColumnIndex, settings, oldValue) {
 	        break;
         case "text-confirm": // text input w/ confirm
             input.html = startWrapperHtml + "<input id='ejbeatycelledit' class='" + inputCss + "' value='"+oldValue+"'" + (listenToKeys ? " onkeyup='if(event.keyCode==13) {$(this).updateEditableCell(this);} else if (event.keyCode===27) {$(this).cancelEditableCell(this);}'" : "") + "></input>&nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
+            break;
+        case "numeric-confirm":
+            var step = (inputSetting.step) ? inputSetting.step : 'any';
+            input.html = startWrapperHtml + "<input id='ejbeatycelledit' class='" + inputCss + "' type='number' step='" + step + "'value='"+oldValue+"'" + (listenToKeys ? " onkeyup='if(event.keyCode==13) {$(this).updateEditableCell(this);} else if (event.keyCode===27) {$(this).cancelEditableCell(this);}'" : "") + "></input>&nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
             break;
         case "undefined-confirm": // text input w/ confirm
             input.html = startWrapperHtml + "<input id='ejbeatycelledit' class='" + inputCss + "' value='" + oldValue + "'" + (listenToKeys ? " onkeyup='if(event.keyCode==13) {$(this).updateEditableCell(this);} else if (event.keyCode===27) {$(this).cancelEditableCell(this);}'" : "") + "></input>&nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
