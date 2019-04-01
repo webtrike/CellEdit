@@ -189,9 +189,10 @@ function getInputHtml(currentColumnIndex, settings, oldValue) {
             break;
         case "datetimepicker": 
         case "datetimepicker-confirm":
+            // always in UTC without timezone
             $(".cell_datetime").datetimepicker('remove');
-            input.html = startWrapperHtml + "<input id='ejbeatycelledit' type='text' name='date' value='" + oldValue + "' readonly class='cell_datetime'></input> &nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
-            setTimeout(function () { //Set timeout to allow the script to write the input.html before triggering the datepicker
+            input.html = startWrapperHtml + "<input id='ejbeatycelledit' type='text' name='date' value='" + moment(oldValue).utc().format('YYYY-MM-DD HH:mm:ss') + "' readonly class='cell_datetime'></input> &nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
+            setTimeout(function () { //Set timeout to allow the script to write the input.html before triggering the datetimepicker
               $(".cell_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii:ss'});
               $(".cell_datetime").datetimepicker('show');
             },100);
