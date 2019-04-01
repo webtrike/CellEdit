@@ -187,6 +187,15 @@ function getInputHtml(currentColumnIndex, settings, oldValue) {
             input.html = input.html + "</select>&nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this);'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
             input.focus = false;
             break;
+        case "datetimepicker": 
+        case "datetimepicker-confirm":
+            $(".cell_datetime").datetimepicker('remove');
+            input.html = startWrapperHtml + "<input id='ejbeatycelledit' type='text' name='date' value='" + oldValue + "' readonly class='cell_datetime'></input> &nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
+            setTimeout(function () { //Set timeout to allow the script to write the input.html before triggering the datepicker
+              $(".cell_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii:ss'});
+              $(".cell_datetime").datetimepicker('show');
+            },100);
+            break;
         case "datepicker": //Both datepicker options work best when confirming the values
         case "datepicker-confirm":
             // Makesure jQuery UI is loaded on the page
