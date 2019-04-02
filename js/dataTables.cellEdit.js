@@ -196,7 +196,8 @@ function getInputHtml(currentColumnIndex, settings, oldValue) {
             }
             input.html = startWrapperHtml + "<input id='ejbeatycelledit' type='text' name='date' value='" + oldValue + "' readonly class='cell_datetime " + inputCss + "'></input> &nbsp;<a href='javascript:void(0);' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'><i class='fa fa-check'></i></a> <a href='javascript:void(0);' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'><i class='fa fa-times'></i></a>" + endWrapperHtml;
             setTimeout(function () { //Set timeout to allow the script to write the input.html before triggering the datetimepicker
-              $(".cell_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii:ss'});
+              $(".cell_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii:ss',
+                                                  viewSelect: 'year'});
               $(".cell_datetime").datetimepicker('show');
               if (inputSetting.startTime) {
                 $(".cell_datetime").datetimepicker('setStartDate',inputSetting.startTime); 
